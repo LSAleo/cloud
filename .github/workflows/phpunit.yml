@@ -9,20 +9,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: Update composer
       run: composer install --prefer-dist --no-progress --no-suggest
-    - name: PhpUnit tests
+    - name: phpunit tests
       run: vendor/bin/phpunit tests
     - name: Discord notify
       if: steps.phpunit.outputs.status ==
         'failure'
-      uses: appleboy/discord-action@master
+      uses: tsickert/discord-webhook@v5.3.0
       with:
-        webhook_id: 549304994566766623
-        webhook_token: m_x4b80MXeBD5GWlx7XIs6IzHtkA-coNuSNmZB0uOKHEivaPAMxAsoh9h-ym14z9i2ii
+        webhook-url: https://discord.com/api/webhooks/1175087105270100000/m_x4b80MXeBD5GWlx7XIs6IzHtkA-coNuSNmZB0uOKHEivaPAMxAsoh9h-ym14z9i2ii
         message: 'PHPUnit FAILED ! Great Job !'
-      if: steps.phpunit.outputs.status ==
-        'success'
-      uses: appleboy/discord-action@master
-      with:
-        webhook_id: 549304994566766623
-        webhook_token: m_x4b80MXeBD5GWlx7XIs6IzHtkA-coNuSNmZB0uOKHEivaPAMxAsoh9h-ym14z9i2ii
-        message: 'PHPUnit SUCCEED ! Great Job !'
